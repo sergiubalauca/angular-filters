@@ -1,0 +1,12 @@
+<div [formGroup]="form">
+    <label>Triggers</label>
+    <div *ngIf="selectTriggers != null">
+        <select formControlName="selectFormControl" (change)="selectOption()">
+            <!-- <option value="" disabled selected>{{selectDefaultValue}}</option> -->
+            <ng-container *ngIf="triggerRemovedByChip">
+                <option value="" disabled selected>{{selectDefaultValue}}</option>
+            </ng-container>
+            <option *ngFor="let option of selectTriggers" [value]="option">{{option}}</option>
+        </select>
+    </div>
+</div>

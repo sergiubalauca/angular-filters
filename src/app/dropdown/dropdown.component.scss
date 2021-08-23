@@ -1,0 +1,48 @@
+form {
+    fieldset {
+        display: grid;
+        // justify-content: space-between;
+        grid-template-columns: repeat(3, 1fr);
+        .chip-container {
+            margin-right: 5%;
+            border: 1px solid #ccc;
+            min-height: 34px;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: space-between;
+
+            .chip {
+                margin: 4px;
+                background: #e0e0e0;
+                padding: 0px 4px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+
+                i::before {
+                    cursor: pointer;
+                    opacity: 0.25;
+                    margin-left: 8px;
+                    content: "x";
+                    color: rgb(93, 32, 32);
+                    font-weight: 300;
+                    font-family: Arial, sans-serif;
+                }
+            }
+            input {
+                flex: 1 1 auto;
+                width: 30px;
+                border: none;
+                outline: none;
+                padding: 4px;
+            }
+
+            div {
+                .hidden-card {
+                    display: none;
+                }
+            }
+        }
+    }
+}

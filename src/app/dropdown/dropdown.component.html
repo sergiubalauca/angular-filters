@@ -1,0 +1,29 @@
+<form [formGroup]="form" (submit)="saveChip()">
+    <fieldset>
+        <div class="chip-container">
+            <!-- make a grid -->
+            <div class="chip" *ngFor="let chip of chips | slice: 0:chips.length; let i=index;">
+                {{chip.chip}}
+                <i class="material-icons" (click)="deleteChip(i)"></i>
+            </div>
+            <!-- <div class="chip" *ngFor="let chip of chips | slice: 1:10; let i=index;"
+                [ngClass]="!chip.isExpanded ? 'hidden-card' : ''">
+                {{chip.chip}}
+                <i class="material-icons" (click)="deleteChip(i)"></i>
+            </div> -->
+            <input name="currentInput" formControlName="chipFormControl" (keyup.enter)="saveChip()">
+        </div>
+        <!-- {{triggerInput}} -->
+        <app-select 
+            [form]="form" 
+            (selectedTrigger)="readFromTriggers($event)"
+            [triggerChip]="triggerInput"
+            ></app-select>
+
+        <app-search-multi-select 
+            [form]="form"
+            (selectedTrigger)="readFromTriggersMulti($event)"
+            [triggerChip]="triggerInput"
+        ></app-search-multi-select>
+    </fieldset>
+</form>
