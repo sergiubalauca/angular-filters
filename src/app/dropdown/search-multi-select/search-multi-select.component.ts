@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, Renderer2, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MultiSelect, SelectOptions } from '../models';
 
@@ -7,14 +7,13 @@ import { MultiSelect, SelectOptions } from '../models';
   templateUrl: './search-multi-select.component.html',
   styleUrls: ['./search-multi-select.component.scss']
 })
-export class SearchMultiSelectComponent implements OnInit, OnChanges {
+export class SearchMultiSelectComponent implements OnChanges, AfterViewInit {
   @Input() public form!: FormGroup;
   @Input() public triggerChip!: string;
   @Output() public selectedTrigger: EventEmitter<MultiSelect[]> = new EventEmitter();
-  @ViewChild('checkbox') public checkbox!: ElementRef;
+  @ViewChild("checkboxContainer", { static: false }) public checkboxContainer!: ElementRef;
 
   public options: MultiSelect[] = [
-    // { value: SelectOptions.all, selected: false },
     { value: SelectOptions.p0010, selected: false },
     { value: SelectOptions.p0011, selected: false },
     { value: SelectOptions.p0012, selected: false },
@@ -38,46 +37,40 @@ export class SearchMultiSelectComponent implements OnInit, OnChanges {
   public multiSelectOptions: any[] = [];
   get formControlsVals() { return this.form.controls; }
 
-  public constructor() { }
+  public constructor(private renderer: Renderer2) { }
 
-  public ngOnInit(): void {
-    // console.log('triggerChip: ', this.triggerChip);
-  }
-
-  ngOnChanges() {
-    console.log('triggerChip: ', this.triggerChip);
+  ngOnChanges(): void {
+    /* listen for changes in the chips container, to check/uncheck filters in the dropdown */
     this.options.filter(opts => opts.value === this.triggerChip).map(opts => {
       opts.selected = false;
       this.allOption.selected = false;
     });
   }
 
-  public showCheckboxes() {
-    let checkboxes = document.getElementById("checkboxes");
+  public ngAfterViewInit() {
+  }
 
-    if (checkboxes) {
-      if (!this.expanded) {
-        checkboxes.style.display = "block";
-        this.expanded = true;
-      } else {
-        checkboxes.style.display = "none";
-        this.expanded = false;
-      }
+  public expandContainer(): void {
+    if (!this.expanded) {
+      this.renderer.setStyle(this.checkboxContainer.nativeElement, 'display', 'block');
+      this.expanded = true;
+    } else {
+      this.renderer.setStyle(this.checkboxContainer.nativeElement, 'display', 'none');
+      this.expanded = false;
     }
   }
 
-  public filterUsers(): void {
+  public filterOptions(): void {
     this.filteredOptions = this.options.filter((item: any) => {
       return item.value.toLowerCase().startsWith(this.formControlsVals.multiSelectInputFormControl.value.toLowerCase());
     });
-    console.log(this.filteredOptions);
 
     if (this.formControlsVals.multiSelectInputFormControl.value !== '') {
       this.options = this.filteredOptions;
     }
     else {
+      /* reset state - can be improved */
       this.options = [
-        // { value: SelectOptions.all, selected: false },
         { value: SelectOptions.p0010, selected: false },
         { value: SelectOptions.p0011, selected: false },
         { value: SelectOptions.p0012, selected: false },
@@ -93,20 +86,13 @@ export class SearchMultiSelectComponent implements OnInit, OnChanges {
 
   public selectOption(event: any): void {
     event.selected = !event.selected;
-
-    // if (event.value === SelectOptions.all) {
-    //   console.log('AAALL!');
-    //   this.options.forEach(opts => opts.selected = true);
-    // }
+    /* set the state for the options and send it to the chips component */
     if (event.value === SelectOptions.all) {
       this.options.forEach(opts =>
-        event.selected ? opts.selected = true : opts.selected = false
+        event.selected === true ? opts.selected = true : opts.selected = false
       );
-      console.log('All option: ', this.allOption)
-      // this.selectedTrigger.emit([this.allOption]);
     }
-    // else
-      // console.log(this.options.filter(opts => opts.selected));
-      this.selectedTrigger.emit(this.options);
+
+    this.selectedTrigger.emit(this.options);
   }
 }

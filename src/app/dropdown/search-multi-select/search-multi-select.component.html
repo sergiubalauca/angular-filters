@@ -1,56 +1,25 @@
 <div [formGroup]="form" class="form">
     <label>Fault</label>
     <div *ngIf="options != null" class="options">
-
         <div class="multiselect">
-            <div class="selectBox" (click)="showCheckboxes()">
+            <div class="selectBox" (click)="expandContainer()">
                 <select>
                     <option>Select an option</option>
                 </select>
                 <div class="overSelect"></div>
             </div>
-            <div id="checkboxes">
+            <div id="checkboxes" #checkboxContainer>
                 <input type="text" placeholder="Search" formControlName="multiSelectInputFormControl"
-                    (input)="filterUsers()">
-                <!-- <select formControlName="multiSelectFormControl">
-                    <option *ngFor="let option of options" [value]="option.value"> -->
+                    (input)="filterOptions()">
                 <label for="allOption.value">
-                    <input #checkbox type="checkbox" id="allOption.value" [checked]="allOption.selected"
+                    <input type="checkbox" id="allOption.value" [checked]="allOption.selected"
                         (change)="selectOption(allOption)" />{{allOption.value}}
                 </label>
                 <label for="option.value" *ngFor="let option of options">
-                    <input #checkbox type="checkbox" id="option.value" [checked]="option.selected"
+                    <input type="checkbox" id="option.value" [checked]="option.selected"
                         (change)="selectOption(option)" />{{option.value}}
                 </label>
-                <!-- </option>
-                </select> -->
-
             </div>
         </div>
-
-        <!-- <select formControlName="multiSelectFormControl" (change)="selectOption()" multiple>
-            <input type="text" placeholder="Search" formControlName="multiSelectInputFormControl"
-                (input)="filterUsers()">
-            <option value="" disabled selected>{{selectDefaultValue}}</option>
-            <option *ngFor="let option of options" [value]="option.value">{{option.value}}</option>
-        </select> -->
     </div>
 </div>
-
-
-<!-- <div class="multiselect">
-    <div class="selectBox" (click)="showCheckboxes()">
-        <select>
-            <option>Select an option</option>
-        </select>
-        <div class="overSelect"></div>
-    </div>
-    <div id="checkboxes">
-        <label for="one">
-            <input type="checkbox" id="one" />First checkbox</label>
-        <label for="two">
-            <input type="checkbox" id="two" />Second checkbox</label>
-        <label for="three">
-            <input type="checkbox" id="three" />Third checkbox</label>
-    </div>
-</div> -->

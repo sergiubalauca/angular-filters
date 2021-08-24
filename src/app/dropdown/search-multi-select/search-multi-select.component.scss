@@ -2,8 +2,6 @@
     .options {
         select {
             width: 70%;
-            option {
-            }
         }
     }
 }
@@ -23,10 +21,7 @@
 
 .overSelect {
     position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    margin: 0;
 }
 
 #checkboxes {
@@ -39,5 +34,5 @@
 }
 
 #checkboxes label:hover {
-    background-color: #1e90ff;
+    background-color: #1effc3;
 }

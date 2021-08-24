@@ -1,29 +1,24 @@
-<form [formGroup]="form" (submit)="saveChip()">
+<form [formGroup]="form" (ngSubmit)="getFilters()">
     <fieldset>
         <div class="chip-container">
-            <!-- make a grid -->
+            <!-- the expand/collapse functionality would be implemented usind slice on the array
+                 and applying ngClass on the div containing index > 0 for chips -->
             <div class="chip" *ngFor="let chip of chips | slice: 0:chips.length; let i=index;">
-                {{chip.chip}}
+                <span>{{chip.chip}}</span>
                 <i class="material-icons" (click)="deleteChip(i)"></i>
             </div>
             <!-- <div class="chip" *ngFor="let chip of chips | slice: 1:10; let i=index;"
-                [ngClass]="!chip.isExpanded ? 'hidden-card' : ''">
+                [ngClass]="!chip.isExpanded ? 'hidden-chips' : ''">
                 {{chip.chip}}
-                <i class="material-icons" (click)="deleteChip(i)"></i>
+                <i class="arrowIcon""></i>
             </div> -->
             <input name="currentInput" formControlName="chipFormControl" (keyup.enter)="saveChip()">
         </div>
-        <!-- {{triggerInput}} -->
-        <app-select 
-            [form]="form" 
-            (selectedTrigger)="readFromTriggers($event)"
-            [triggerChip]="triggerInput"
-            ></app-select>
+        <app-select [form]="form" (selectedTrigger)="readFromTriggers($event)" [triggerChip]="triggerInput">
+        </app-select>
 
-        <app-search-multi-select 
-            [form]="form"
-            (selectedTrigger)="readFromTriggersMulti($event)"
-            [triggerChip]="triggerInput"
-        ></app-search-multi-select>
+        <app-search-multi-select [form]="form" (selectedTrigger)="readFromTriggersMulti($event)"
+            [triggerChip]="triggerInput"></app-search-multi-select>
     </fieldset>
+    <button type="submit">Submit</button>
 </form>

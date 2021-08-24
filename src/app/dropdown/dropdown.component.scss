@@ -1,7 +1,6 @@
 form {
     fieldset {
         display: grid;
-        // justify-content: space-between;
         grid-template-columns: repeat(3, 1fr);
         .chip-container {
             margin-right: 5%;
@@ -13,20 +12,22 @@ form {
 
             .chip {
                 margin: 4px;
-                background: #e0e0e0;
+                background: #509ac7;
                 padding: 0px 4px;
-                border: 1px solid #ccc;
+                border: 1px solid rgb(148, 222, 253);
                 border-radius: 10px;
                 display: flex;
                 align-items: center;
+                justify-content: center;
 
                 i::before {
                     cursor: pointer;
                     opacity: 0.25;
-                    margin-left: 8px;
                     content: "x";
+                    padding: 5px;
                     color: rgb(93, 32, 32);
                     font-weight: 300;
+                    font-size: 1rem;
                     font-family: Arial, sans-serif;
                 }
             }
@@ -36,10 +37,11 @@ form {
                 border: none;
                 outline: none;
                 padding: 4px;
+                border: 1px solid #ccc;
             }
 
             div {
-                .hidden-card {
+                .hidden-chips {
                     display: none;
                 }
             }
